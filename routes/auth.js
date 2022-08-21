@@ -52,10 +52,13 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 });
 
 // 3. 로그아웃 라우터
-router.get('/logout', isLoggedIn, (req, res) => {
-  req.logout();
+router.get('/logout', isLoggedIn, function(req, res, next) {
+  //req.logout();
+  req.logout(function(err) {
+    if (err) { return next(err); }
   req.session.destroy();
   res.redirect('/');
+  });
 });
 
 
